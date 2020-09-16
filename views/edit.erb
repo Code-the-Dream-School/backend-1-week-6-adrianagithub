@@ -1,0 +1,13 @@
+<h1>New/edit Game Random Numbers for the player: <%= @title %></h1>
+<div>
+    <form method="post" action="/<%= @title %>">
+      <input type="hidden" name="_method" value="put">
+      <fieldset>
+        <label for="number">Try to guess the number again <%= @content %></label>
+        <input type="text" name="number" id="number">
+        #how do I send this number to the array on the submit and this should stay here and request a new number again     
+      </fieldset>
+      <input type="submit">
+    </form>
+</div>
+<a href="/">Back to index</a>
