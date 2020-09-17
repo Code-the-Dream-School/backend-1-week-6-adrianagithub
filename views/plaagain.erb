@@ -7,12 +7,10 @@
     <p> Result<%= session[:message] %></p>
     <fieldset>
       <label for="user_number">What is the number from 1 to 100 that I am thinking, try to beat me</label>
-      <input type="text" name="user_number" id="user_number" value=<%= @user_number %>>
+      <input type="text" name="user_number" id="user_number" value="">
       <label for="secret_num">Secret number</label>
       <p>Numero secreto es<%= @secret_num %></p>
     </fieldset>
-    
-    
 
     <input type="submit">
     <% session[:name] = @name %>
