@@ -14,7 +14,7 @@
     </fieldset>
     
     <p>Welcome I hope you can beat me <%= session[:name]  %></p>
-    <p> guesses <%= session[:guesses] %></p> 
+    <p> These are the numbers that you have been trying <%= session[:guesses] %></p> 
     <p> Secret number is<%= session[:secret_num] %></p>
     <p> Result<%= session[:message] %></p>
 

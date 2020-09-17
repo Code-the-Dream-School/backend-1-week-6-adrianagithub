@@ -11,7 +11,7 @@ end
   
 get "/new" do
   #initialize
-  session.delete(:guesses)
+  session[:guesses] = ""
   session[:guess_count] = 0
   $logger.warn "The secret number is #{session[:secret_num]}"
   @bckgrn_color = "blue"
@@ -31,7 +31,6 @@ post "/new" do
   params.inspect #we will get a hash from my form {"name"=>"adriana", "user_number"=>"1"}
   session[:name] = params[:name]
   session[:message] = ""
-  guesses = session[:guesses]
   logger.warn "guesses#{session[:guesses]}"
   if @user_number == ""
     message = 'You should type a number, this field can not be blank'
@@ -40,11 +39,8 @@ post "/new" do
     @user_number = params[:user_number].to_i
     $logger.warn "The params user number is #{@user_number}"
     $logger.warn "The session secret number is #{session[:secret_num]}"
-    guesses = session[:guesses]#bitacora
-    if guesses.nil?
-      guesses =[]
-    end 
-
+    guesses = session[:guesses]
+    guesses = [] #bitacora
     #session[:guess_count] += 1
     $logger.warn "COUNTER #{session[:guess_count]}"
     if (session[:guess_count] <= 6)  #|| @user_number > session[:secret_num] do
@@ -59,15 +55,13 @@ post "/new" do
       redirect "/new"
       elsif @user_number > session[:secret_num]
         session[:guess_count] += 1
+        #session[:guesses].push(params[:user_number])
         guesses.push(params[:user_number])
-        #*@guesses.push(params[:user_number])
-        logger.warn "guesses are#{guesses}"
         #session[:guesses].push(@user_numbers.to_s)
         dif =  @user_number - session[:secret_num]
         if (dif <= 10)
         session[:message] = 'Too High'
         logger.warn "the number is#{session[:message]}"
-        logger.warn "the guesses#{session[:guesses]}"
         elsif dif > 10
         session[:message] = 'Way Too High'
         logger.warn "the number is#{session[:message]}"
@@ -75,17 +69,16 @@ post "/new" do
         erb :playagain
       elsif session[:secret_num] > @user_number
         session[:guess_count] += 1
+                #session[:guesses].push(params[:user_number])
         guesses.push(params[:user_number])
-        logger.warn "guesses are#{guesses}"
-        #*@guesses.push(params[:user_number])
-        #session[:guesses].push(@user_number.to_s)
+                #session[:guesses].push(@user_number.to_s)
         dif = session[:secret_num] - @user_number
         if (dif <= 10)
           session[:message] = 'Too Low'
-          logger.warn "the msg#{session[:message]}"
+          logger.warn "the number is#{session[:message]}"
         elsif dif > 10
           session[:message] = 'Way Too Low'
-          logger.warn "the msg#{session[:message]}"
+          logger.warn "the number is#{session[:message]}"
         end #end if
        erb :playagain
     else
